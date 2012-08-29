@@ -1,0 +1,6 @@
+<div id="b_over">
+	<p class="title">背景色選択</p>
+	<input type="text" name="c2" value="#eee" id="bg" class="html5jp-cpick [coloring:true]" />	
+	<p class="paint" class="title">決定</p>
+</div>
+

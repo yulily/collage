@@ -1,0 +1,305 @@
+@charset "UTF-8";
+*{ margin: 0; padding: 0}
+body{
+	font-size: 0.9em;
+	text-shadow: 1px 0 0 #eee;
+	line-height: 1.6em;
+	background-color: #fff;
+	-webkit-text-size-adjust: none;
+	overflow: hidden;
+	font-family:"Century Gothic","Lucida Sans Unicode","Lucida Grande",Arial,Helvetica,"ヒラギノ丸ゴ Pro W4",HiraMaruPro-W4,"ヒラギノ角ゴ Pro W3","メイリオ",Meiryo,Osaka,sans-serif
+}
+body,html{ position: relative; height: 100%}
+/* set */
+a{ color: #2b0f07}
+ul,ol{ list-style: none}
+img{ border: none}
+h1,h2,h3,h4,h5{ font-size: 1em}
+.altText{
+	height: 0;
+	text-indent: -9999px;
+	overflow: hidden;
+	display: block
+}
+.right{ text-align: right}
+.cf{ zoom: 1}
+.cf:after{
+	content: '';
+	display: block;
+	clear: both	
+}
+/* common */
+.title{
+	width: 100%;
+	text-align: center;
+	padding: 5px 0;
+	margin: 0 0 10px;
+	clear: both;
+	color: #fff;
+	background-color: #222
+}
+#bg{ width: 120px; text-align: center}
+body.thankyou{ text-align: center}
+#siteHeader{ top: 0; left: 0; position: fixed}
+/* start_hidden */
+#bgc{
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	position: fixed;
+	z-index: 4;
+	top: 0;
+	background-color: rgba(0,0,0,.7)
+}
+	#b_over{
+		width: 600px;
+		padding: 10px;
+		background-color: rgba(255,255,255,.9);
+		margin: 0 auto;
+	}
+		.paint{
+			width: 130px;
+			padding: 5px;
+			color: #fff;
+			border: 1px solid #777;
+			margin: 20px auto;
+			background-color: #333
+		}
+/* save_hidden */
+#s_over,
+#over{
+	width: 100%;
+	height: 100%;
+	display: none;
+	top: 0;
+	left: 0;
+	position: fixed;
+	z-index: 3
+}
+	#over{ background-color: rgba(0,0,0,.6); z-index: 1}
+	#btn{
+		width: 320px;
+		margin: 0 auto
+	}
+		#regist,
+		#back{
+			display: block;
+			margin-left: 20px;
+			float: left
+		}
+/* content */
+#wrap{}
+	article header{
+		position: absolute;
+		top : 10%;
+		left: 0px;
+	}
+		#canvas{
+			width: 800px;
+			height: 550px;
+			margin: 0 0 0 auto;
+			position: relative;
+			z-index: 2
+		}
+		#canvas li{
+			border: 1px solid #333;
+			height: 550px;
+			position: absolute;
+			top: 1px
+		}
+		#switch{
+			font-weight: bold;
+			padding: 10px;
+			bottom: 0;
+			right: 30px;
+			cursor: pointer;
+			position: absolute;
+			background-color: #fff;
+			border: 1px solid #444;
+			z-index: 2
+		}
+		#tool{
+			width: 500px;
+			height: 100%;
+			min-height: 100%;
+			position: absolute;
+			left: -500px;
+			top: 0px;
+			z-index: 10;
+			background-color: rgba(0,0,0,.2)
+		}
+		#tool > ul{ float: left}
+			.tool_01{ width:200px; float: left}
+			.tool_02{ width:500px}			
+			.tool_03{ width:500px}			
+			.tool_04{ width:300px; float: left}			
+			.tool_05{ width:500px}			
+			.tool_06{ width:150px}			
+				.tool_01 .nf{ clear: both}
+				.tool_01 li:not(.nf){ float: left}
+				.tool_03 li:not(.title){ border: 1px solid #333; margin: 5px; float: left}
+			.s,.f{ float: left}
+			.paint_back span{ display: none}
+			.nothum{ width: 200px}
+		#weight{
+			width: 100px;
+			height: 20px;
+			background-color: #eee;
+			box-shadow: 0 0 5px #222;
+			border-top: 1px solid #666;
+			border-bottom: 1px solid #666;
+			position: relative
+		}
+			.get{
+				width: 10px;
+				height: 25px;
+				border: 1px solid #eee;
+				border-radius: 5px;
+				box-shadow: 0 0 2px #222;
+				background-color: #444;
+				background-image: linear-gradient(bottom, rgb(77,77,77) 8%, rgb(51,49,51) 33%, rgb(74,74,74) 98%);
+				background-image: -o-linear-gradient(bottom, rgb(77,77,77) 8%, rgb(51,49,51) 33%, rgb(74,74,74) 98%);
+				background-image: -moz-linear-gradient(bottom, rgb(77,77,77) 8%, rgb(51,49,51) 33%, rgb(74,74,74) 98%);
+				background-image: -webkit-linear-gradient(bottom, rgb(77,77,77) 8%, rgb(51,49,51) 33%, rgb(74,74,74) 98%);
+				background-image: -ms-linear-gradient(bottom, rgb(77,77,77) 8%, rgb(51,49,51) 33%, rgb(74,74,74) 98%);
+				background-image: -webkit-gradient(
+					linear,
+					left bottom,
+					left top,
+					color-stop(0.08, rgb(77,77,77)),
+					color-stop(0.33, rgb(51,49,51)),
+					color-stop(0.98, rgb(74,74,74))
+				);
+				position: absolute;
+				top: -5px;
+				left: 0 
+			}
+		#tool dl dd{ margin: 10px 0}
+		#tool dl dd ul{ display: -webkit-box; display: -moz-box}
+			#tool .imcus li{
+				width: 23px;
+				height: 23px;
+				margin-left: 2px;
+				text-indent: -9999px;
+				background-color: #444;
+				-webkit-box-ordinal-group: 1  
+			}
+			#tool .cust li{
+				width: 23px;
+				-webkit-box-ordinal-group: 1
+			}
+		#tool ol li{
+			line-height: 50px;
+			float: left;
+			vertical-align: top
+		}	
+			#tool ol .layer {
+				width: 50px;
+				height: 34px;
+				background-image: url("../image/bg_none.png");
+			}
+			#tool ol .canvas3 img{ border: 2px solid #a00}
+			#tool #save{
+				width: 138px;
+				color: #fff;
+				text-align: center;
+				text-shadow: 1px 0 0 #000;
+				border: 1px solid #444;
+				padding: 5px 0;
+				display: block;
+				background-image: linear-gradient(bottom, rgb(79,79,79) 87%, rgb(36,35,36) 41%, rgb(0,0,0) 35%);
+				background-image: -o-linear-gradient(bottom, rgb(79,79,79) 87%, rgb(36,35,36) 41%, rgb(0,0,0) 35%);
+				background-image: -moz-linear-gradient(bottom, rgb(79,79,79) 87%, rgb(36,35,36) 41%, rgb(0,0,0) 35%);
+				background-image: -webkit-linear-gradient(bottom, rgb(79,79,79) 87%, rgb(36,35,36) 41%, rgb(0,0,0) 35%);
+				background-image: -ms-linear-gradient(bottom, rgb(79,79,79) 87%, rgb(36,35,36) 41%, rgb(0,0,0) 35%);
+				background-image: -webkit-gradient(
+					linear,
+					left bottom,
+					left top,
+					color-stop(0.87, rgb(79,79,79)),
+					color-stop(0.41, rgb(36,35,36)),
+					color-stop(0.35, rgb(0,0,0))
+				);
+			}
+#picture{
+	width: 630px;
+	padding-top: 25px;
+	margin: 0 auto
+}
+	.thanks{
+		width: 120px;
+		height: 120px;
+		text-align: center;
+		color: #000;
+		opacity: 0;
+		position: absolute;
+		top: 0px;
+		left: 70%;
+		margin-left: -75px;
+		padding: 20px;
+		font-weight: bold;
+		border: 10px solid #444;
+		border-bottom: none;
+		background-color: #fff;
+		border-radius: 50%;
+	}
+	#draw.thanks{
+		top: auto;
+		left: auto;
+		margin: 0 auto;
+		position: relative
+	}
+#your_canvas{
+	width: 630px;
+	height: 750px;
+	margin: 0 auto 
+}
+	#your_canvas ul{
+		color: #fff;
+		padding-top: 45px;
+		text-shadow: -1px 1px 2px #333, -1px -1px 2px #333, 1px -1px 2px #333, 1px 1px 2px #333;
+		margin: 0 50px;
+	}
+.thankyou nav{
+	width: 300px;
+	top: 10px;
+	right: 0;
+	position: fixed;
+}
+	.thankyou nav #nowselect li{
+		color: #fff;
+		text-shadow: 1px 0 0 #aaa;
+		height: 50px;
+		margin: 10px 0;
+		text-align: center;
+		position: relative;
+		border-radius: 15px;
+		-webkit-box-shadow: 0px 0px 2px 1px #777;
+		box-shadow: 0px 0px 2px 1px #777;
+		background-color: #333
+	}
+		.thankyou nav li input[type='range']{
+			width: 300px;
+			height: 10px;
+			border: 1px solid #222;
+			background-color: #ddd;
+			border-radius: 15px;
+			cursor:-moz-grab;
+  			cursor:-webkit-grab
+		}	
+		.thankyou nav li output{
+			height: 10px;
+			display: block
+		}
+	#nowmode li{
+		font-size: 80%;
+		width: 84px;
+		height: 20px;
+		padding: 5px;
+		margin: 2px;
+		border: 1px solid #444;
+		float: left;
+		cursor: pointer;
+		background-color: rgba(255,255,255,.6)
+	}
+	.select{ background-color: #eee}
