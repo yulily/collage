@@ -1,20 +1,21 @@
 $(function() {
 	//localStorage.clear();
-	var penX,penY,ctx,stampSrc,penWidth,bg;
+	var penX,penY,ctx,stampSrc,penWidth;
 	var drawing   = false,
 		stampFlg  = false,
 		penColor  = '#000',
-		paintDb  = [],
-		penLeft    = 1,
+		paintDb   = [],
+		penLeft   = 1,
 		nowLayer  = 'canvas3',
-		savenum   = 0;
+		savenum   = 0,
+		bg        ="#eee";
 	var layer = {
 			canvas  : $('#collage')[0],
 			canvas3 : $('#collage3')[0],
 			canvas2 : $('#collage2')[0],
 			canvas1 : $('#collage1')[0],
 			canvas0	: $('#collage0')[0]
-	}
+	}	
 	var Draw = function (layer) {  
 		if (layer.getContext) {
 			ctx = layer.getContext('2d');
@@ -24,7 +25,7 @@ $(function() {
 			penY = e.pageY;
 			if ( !stampFlg ) {
 				if (drawing) {
-					ctx.lineTo(penX,penY);
+					ctx.lineTo(penX,penY-53);
 					ctx.stroke();
 				}
 				$(this).mousedown(function() {
@@ -42,6 +43,13 @@ $(function() {
 			$('#mouse_state').html('座標:'+ penX +','+penY);
 		});
 	} 
+	
+	Draw(layer.canvas);
+	ctx.fillStyle = bg;
+	ctx.fillRect(0,0,800,550);
+ 	Draw(layer.canvas3);
+	$('#colorpicker').farbtastic('#color');
+	
 	Draw.prototype = {
 		frame : function() {
 			var img = new Image();
@@ -92,48 +100,20 @@ $(function() {
 		var view = $("ol li").eq(layer_index).find('img');
 		view.attr("src",layer[nowLayer].toDataURL());
 	}
-	$.ajax({
-		url      : 'colorset.txt',
-		type     : 'GET',
-		dataType : 'text',
-		success  : function(res){
-					 $("#bgc").html(res);
-					 $('.paint').click(function(){
-						bg = $("#bg").val();
-						Draw(layer.canvas);
-						ctx.fillStyle = bg;
-						ctx.fillRect(0,0,800,550);
-					 	$('#bgc,#b_over').hide(); 	
-					 	Draw(layer.canvas3);
-					 });
-				   }
-	});
 	$.each(localStorage,function(i) {
 		var datasrc  = localStorage.getItem("save"+i);
 		var save_img = $('<img />').attr('src', datasrc).width('50px').height('34px');
 		var list     = $('<li />').append(save_img);
 		$('.tool_03').append(list);
 	});
-	$("#switch").toggle(
-		  function () {
-		 	  $(this).text('ツールを閉じる');
-			  $("#tool").animate({ top: "0px", left: "0px"});
-		  },
-		  function () {
-			  $(this).text('ツールを開く');
-			  $("#tool").animate({ top: "0px", left: "-500px"});
-		  }
-	 );
 	$('#canvas canvas').click(function() {
 		Draw.prototype.dbSave();
-		var r = paintDb.length; //
-		//console.log(r); //
+		var r = paintDb.length;
 		layerInfo();
 	});
 	$(".paint_back").click(function() {
 		var img = new Image();
 		var i = paintDb.length - 2;
-		//console.log(paintDb.length); //
 		img.src = paintDb[i];
 		img.onload = function(){
 		  ctx.clearRect(0,0,800,550);
@@ -173,8 +153,9 @@ $(function() {
 		$(this).find('img').css("border", "2px solid #a00");
 		nowLayer = $(this).attr('class');
 	});
-	$('#t2').focus(function(e) {
-		penColor = $(this).val();
+	$('div.clickzone').click(function() {
+		console.log($('#color').val());
+		penColor = $('#color').val();
     });
 	$(document).on('click','ul.imcus li',function() {
 		penColor = $(this).text();
@@ -202,10 +183,6 @@ $(function() {
 		  layerInfo();
 		}
     });
-	$(document).on('dblclick','ul.tool_03 li',function() {
-		console.log($(this).parent('li').index() - 1);
-		localStorage.removeItem($(this).parent('li').index() - 1);
-	});
 	$('#weight').mousedown(function(e) {
 		penLeft = e.pageX - parseInt($(this).offset().left);
 		if(0 < penLeft && penLeft < 100) $('.get').css( 'left',penLeft +'px' );
@@ -224,6 +201,19 @@ $(function() {
 			$('.get').css('left',penLeft+'px');
 			$('#w').html(penLeft);
 		}
+	});
+	$("#tool ul,#tool dl").mousedown(function(e){
+		$(this)
+			.data("X",e.pageX - $(this).position().left)
+			.data("Y",e.pageY - $(this).position().top)
+			.mousemove(function(e){
+				$(this).css({
+					top  : e.pageY - $(this).data("Y")+"px",
+					left : e.pageX - $(this).data("X")+"px"
+				});
+			}).mouseup(function(e){
+				$("#tool ul,#tool dl").unbind("mousemove");
+			});
 	});
 	$('#save').click(function() {
 		$('#s_over form input').not('#regist').remove();

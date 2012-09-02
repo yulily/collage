@@ -36,35 +36,12 @@ h1,h2,h3,h4,h5{ font-size: 1em}
 	margin: 0 0 10px;
 	clear: both;
 	color: #fff;
+	border-radius: 10px 10px 0 0;
 	background-color: #222
 }
 #bg{ width: 120px; text-align: center}
 body.thankyou{ text-align: center}
 #siteHeader{ top: 0; left: 0; position: fixed}
-/* start_hidden */
-#bgc{
-	width: 100%;
-	height: 100%;
-	text-align: center;
-	position: fixed;
-	z-index: 4;
-	top: 0;
-	background-color: rgba(0,0,0,.7)
-}
-	#b_over{
-		width: 600px;
-		padding: 10px;
-		background-color: rgba(255,255,255,.9);
-		margin: 0 auto;
-	}
-		.paint{
-			width: 130px;
-			padding: 5px;
-			color: #fff;
-			border: 1px solid #777;
-			margin: 20px auto;
-			background-color: #333
-		}
 /* save_hidden */
 #s_over,
 #over{
@@ -88,16 +65,22 @@ body.thankyou{ text-align: center}
 			float: left
 		}
 /* content */
-#wrap{}
-	article header{
+	article{
+		width: 820px;
 		position: absolute;
-		top : 10%;
-		left: 0px;
+		top : 20px;
+		left: 50%;
+		margin-left: -400px;
+		background-color: rgba(0,0,0,.5);
+		border-radius: 10px 10px 0 0
 	}
+		article h1.title{
+			margin: 0
+		}
 		#canvas{
 			width: 800px;
 			height: 550px;
-			margin: 0 0 0 auto;
+			margin: 10px;
 			position: relative;
 			z-index: 2
 		}
@@ -105,7 +88,6 @@ body.thankyou{ text-align: center}
 			border: 1px solid #333;
 			height: 550px;
 			position: absolute;
-			top: 1px
 		}
 		#switch{
 			font-weight: bold;
@@ -118,26 +100,26 @@ body.thankyou{ text-align: center}
 			border: 1px solid #444;
 			z-index: 2
 		}
-		#tool{
-			width: 500px;
-			height: 100%;
-			min-height: 100%;
-			position: absolute;
-			left: -500px;
-			top: 0px;
+		#tool > ul,
+		#tool > dl{
 			z-index: 10;
-			background-color: rgba(0,0,0,.2)
+			border-radius: 10px 10px 0 0;
+			background-color: rgba(0,0,0,.5);
+			position: absolute
 		}
-		#tool > ul{ float: left}
-			.tool_01{ width:200px; float: left}
-			.tool_02{ width:500px}			
-			.tool_03{ width:500px}			
-			.tool_04{ width:300px; float: left}			
-			.tool_05{ width:500px}			
-			.tool_06{ width:150px}			
+			.tool_01{ width:200px; top: 10px; left: 10px}
+			.tool_02{ width:300px; top: 200px; left: 10px}			
+			.tool_03{ width:300px; top: 500px; left: 10px}			
+			.tool_04{ width:300px; top: 10px; right: 10px}			
+			.tool_05{ width:200px; top: 300px; right: 10px}			
+			.tool_06{ width:150px; top: 500px; right: 10px}			
 				.tool_01 .nf{ clear: both}
 				.tool_01 li:not(.nf){ float: left}
 				.tool_03 li:not(.title){ border: 1px solid #333; margin: 5px; float: left}
+				.tool_05 ol li{
+					line-height: 50px;
+					vertical-align: top
+				}	
 			.s,.f{ float: left}
 			.paint_back span{ display: none}
 			.nothum{ width: 200px}
@@ -184,15 +166,15 @@ body.thankyou{ text-align: center}
 				background-color: #444;
 				-webkit-box-ordinal-group: 1  
 			}
+			.clickzone{
+				width: 100%;
+				height: 100%;
+				z-index: 999
+			}
 			#tool .cust li{
 				width: 23px;
 				-webkit-box-ordinal-group: 1
 			}
-		#tool ol li{
-			line-height: 50px;
-			float: left;
-			vertical-align: top
-		}	
 			#tool ol .layer {
 				width: 50px;
 				height: 34px;
