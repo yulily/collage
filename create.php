@@ -1,8 +1,11 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 	<meta charset="utf-8">
-	<title>White</title>
+	<title>DaPaD</title>
 	
 	<meta name="viewport" content="width=device-width" />
 	<meta name="format-detection" content="telephone=no" />
@@ -26,7 +29,7 @@
 	<body class="create cf">
         <div id="siteHeader">
             <hgroup>
-                <h1><a href="/" rel="index" class="googleFont">White</a></h1>
+                <h1><a href="/" rel="index" class="googleFont">DaPaD</a></h1>
             </hgroup>
         </div>
             <section class="cf" id="wrap">    
@@ -41,16 +44,39 @@
                     <li id="mouse_state" class="nf">座標:</li>           
                   </ul>
                   <ul class="tool_02 cf">
-                    <li class="title">STAMP</li>
-                    <li class="s"><img src="image/stamp/imgFlower01.png" width="45"></li>
-                    <li class="s"><img src="image/stamp/imgFlower02.png" width="45"></li>
-                    <li class="s"><img src="image/stamp/imgFlower03.png" width="45"></li>
-                    <li class="s"><img src="image/stamp/imgFlower04.png" width="45"></li>
-                    <li class="title">FRAME</li>
-                    <li class="f"><img src="image/frame/frame01.png" width="45"></li>
-                    <li class="f"><img src="image/frame/frame02.png" width="45"></li>
-                    <li class="f"><img src="image/frame/frame03.png" width="45"></li>
-                    <li class="f"><img src="image/frame/frame04.png" width="45"></li>
+                   <li>
+                       <ul>
+                            <li class="title">STAMP</li>
+                            <li class="s"><img src="image/stamp/imgFlower01.png" width="45"></li>
+                            <li class="s"><img src="image/stamp/imgFlower02.png" width="45"></li>
+                            <li class="s"><img src="image/stamp/imgFlower03.png" width="45"></li>
+                            <li class="s"><img src="image/stamp/imgFlower04.png" width="45"></li>
+                      </ul>
+                   </li>
+                   <li>
+                       <ul>
+                            <li class="title">FRAME</li>
+                            <li class="f"><img src="image/frame/frame01.png" width="100" height="69" /></li>
+                            <li class="f"><img src="image/frame/frame02.png" width="100" height="69" /></li>
+                            <li class="f"><img src="image/frame/frame03.png" width="100" height="69" /></li>
+                            <li class="f"><img src="image/frame/frame04.png" width="100" height="69" /></li>
+                       </ul>
+                   </li>
+                   <li>
+                       <ul>
+                          <?php
+                            if($_SESSION['access_token']){
+                              echo "<li class='title'>instagram</li>";
+                                $path = './img';
+                                $dir = scandir($path);
+                                $dir_max = count($dir)-3;
+                                for($i=0; $i<$dir_max;$i++ ){
+                                   echo "<li class='i'><img src='img/insta".$i.".jpg' width='50' /></li> ";
+                                 }
+                              }
+                          ?>
+                       </ul>
+                   </li>
                   </ul>
                   <ul class="tool_03 cf">
                     <li class="title">SAVEDATA</li>

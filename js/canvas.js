@@ -22,10 +22,10 @@ $(function() {
 		}
 		$('#canvas canvas').mousemove(function(e){		
 			penX = e.pageX - parseInt($(this).offset().left);
-			penY = e.pageY;
+			penY = e.pageY - parseInt($(this).offset().top);
 			if ( !stampFlg ) {
 				if (drawing) {
-					ctx.lineTo(penX,penY-53);
+					ctx.lineTo(penX,penY);
 					ctx.stroke();
 				}
 				$(this).mousedown(function() {
@@ -42,14 +42,24 @@ $(function() {
 			}
 			$('#mouse_state').html('座標:'+ penX +','+penY);
 		});
-	} 
-	
+	}
+
 	Draw(layer.canvas);
-	ctx.fillStyle = bg;
-	ctx.fillRect(0,0,800,550);
- 	Draw(layer.canvas3);
+    var bgi = location.search.substring(7,window.location.search.length);
+    var centerX = Math.floor(800-612)/2;
+	if(bgi){
+        var img = new Image();
+        img.src = bgi;
+        img.onload = function() {
+            ctx.drawImage(img,centerX,0);
+        }
+    }else{
+        ctx.fillStyle = bg;
+        ctx.fillRect(0,0,800,550);
+    }
+    Draw(layer.canvas3);
 	$('#colorpicker').farbtastic('#color');
-	
+
 	Draw.prototype = {
 		frame : function() {
 			var img = new Image();
@@ -77,6 +87,14 @@ $(function() {
 				}
 			}
 		},
+        insta : function() {
+            var img = new Image();
+            img.src = stampSrc;
+            img.onload = function() {
+                ctx.drawImage(img,centerX,0);
+                layerInfo();
+            }
+        },
 		dbSave : function(save) {
 			var maxCases = 10;
 			var base64 = layer[nowLayer].toDataURL();
@@ -135,7 +153,9 @@ $(function() {
 			Draw.prototype.stamp();
 		} else if( fs == 'f' ) {
 			Draw.prototype.frame();
-		}
+		} else if( fs == 'i' ){
+            Draw.prototype.insta();
+        }
 	});
 	var e = new Draw( layer.canvas3 );
 	$('ol li').click(function() {
@@ -173,15 +193,17 @@ $(function() {
 		Draw.prototype.dbSave("save");
 	});
 	$(document).on('click','ul.tool_03 li',function() {
-		var num = $(this).index() - 1;
-		var base64 = localStorage.getItem("save" + num);
-		var img = new Image();
-		img.src = base64;
-	    ctx.clearRect(0,0,800,550);
-		img.onload = function() {
-		  ctx.drawImage(img,0,0);
-		  layerInfo();
-		}
+        if($(this).index() != 0){
+            var num = $(this).index() - 1;
+            var base64 = localStorage.getItem("save" + num);
+            var img = new Image();
+            img.src = base64;
+            ctx.clearRect(0,0,800,550);
+            img.onload = function() {
+              ctx.drawImage(img,0,0);
+              layerInfo();
+            }
+        }
     });
 	$('#weight').mousedown(function(e) {
 		penLeft = e.pageX - parseInt($(this).offset().left);
