@@ -8,7 +8,7 @@ $(function() {
 		penLeft   = 1,
 		nowLayer  = 'canvas3',
 		savenum   = 0,
-		bg        ="#eee";
+		bg        = "#eee";
 	var layer = {
 			canvas  : $('#collage')[0],
 			canvas3 : $('#collage3')[0],
@@ -43,8 +43,92 @@ $(function() {
 			$('#mouse_state').html('座標:'+ penX +','+penY);
 		});
 	}
-
-	Draw(layer.canvas);
+    Draw.prototype = {
+        frame : function() {
+            var img = new Image();
+            img.src = stampSrc;
+            img.onload = function() {
+                ctx.drawImage(img,0,0);
+                layerInfo();
+            }
+        },
+        stamp : function() {
+            stampFlg = true;
+            if (stampFlg) {
+                img = new Image();
+                img.src = stampSrc;
+                img.onload = function() {
+                    $('#canvas').mousemove(function(e) {
+                        sX = e.pageX - $(this).offset().left - img.width/2;
+                        sY = e.pageY - img.height / 2;
+                        $(this).mousedown(function(){
+                            (!stampFlg) ? img.src ="" : false;
+                            ctx.drawImage(img,sX,sY);
+                        });
+                    });
+                    layerInfo();
+                }
+            }
+        },
+        insta : function() {
+            var img = new Image();
+            img.src = stampSrc;
+            img.onload = function() {
+                ctx.drawImage(img,centerX,0);
+                layerInfo();
+            }
+        },
+        dbSave : function(save) {
+            var maxCases = 10;
+            var base64 = layer[nowLayer].toDataURL();
+            if(save){
+                if ( localStorage.length < maxCases ) {
+                    window.localStorage.setItem("save"+localStorage.length,base64);
+                    var save_img = $('<img />').attr('src', base64).width('50px').height('34px');
+                    var list = $('<li />').append(save_img);
+                    $('.tool_03').append(list);
+                } else { alert("保存領域がいっぱいです。どれか消して再度登録して下さい");}
+            } else {
+                if ( paintDb.length < maxCases ) {
+                    var i = paintDb.length;
+                    paintDb[i] = base64;
+                }
+            }
+        }
+    };
+    var layerInfo = function () {
+        var layer_index = nowLayer.replace('canvas','');
+        var view = $("ol li").eq(layer_index).find('img');
+        view.attr("src",layer[nowLayer].toDataURL());
+    }
+    function mouseHandler(e) {
+        e.preventDefault();
+        var flickX = e.pageX - parseInt($(this).offset().left);
+        if (e.type == "mousedown") {
+            startX = flickX.pageX;
+        } else if (e.type == "mousemove") {
+            diffX = 0;
+            diffX = flickX.pageX - startX;
+        } else if (e.type == "mouseup") {
+            if (diffX > 60) {
+                animate('prev', effect);
+                diffX = 0;
+            } else if (diffX < -60) {
+                animate('next', effect);
+                diffX = 0;
+            } else  {
+                var href = $(".slides_control a.current").attr("href");
+                window.open(href,'_self');
+                diffX = 0;
+            }
+        }
+    }
+    $.each(localStorage,function(i) {
+        var datasrc  = localStorage.getItem("save"+i);
+        var save_img = $('<img />').attr('src', datasrc).width('50px').height('34px');
+        var list     = $('<li />').append(save_img);
+        $('.tool_03').append(list);
+    });
     var bgi = location.search.substring(7,window.location.search.length);
     var centerX = Math.floor(800-612)/2;
 	if(bgi){
@@ -59,71 +143,6 @@ $(function() {
     }
     Draw(layer.canvas3);
 	$('#colorpicker').farbtastic('#color');
-
-	Draw.prototype = {
-		frame : function() {
-			var img = new Image();
-			img.src = stampSrc;
-			img.onload = function() {
-				ctx.drawImage(img,0,0);
-				layerInfo();
-			}
-		},
-		stamp : function() {
-			stampFlg = true;
-			if (stampFlg) {
-				img = new Image();
-				img.src = stampSrc;
-				img.onload = function() {
-					 $('#canvas').mousemove(function(e) {	
-						sX = e.pageX - $(this).offset().left - img.width/2;
-						sY = e.pageY - img.height / 2;
-						$(this).mousedown(function(){
-							(!stampFlg) ? img.src ="" : false;
-							ctx.drawImage(img,sX,sY);
-						});
-				 	});
-					layerInfo();
-				}
-			}
-		},
-        insta : function() {
-            var img = new Image();
-            img.src = stampSrc;
-            img.onload = function() {
-                ctx.drawImage(img,centerX,0);
-                layerInfo();
-            }
-        },
-		dbSave : function(save) {
-			var maxCases = 10;
-			var base64 = layer[nowLayer].toDataURL();
-			if(save){
-				if ( localStorage.length < maxCases ) {
-					window.localStorage.setItem("save"+localStorage.length,base64);
-					var save_img = $('<img />').attr('src', base64).width('50px').height('34px');
-					var list = $('<li />').append(save_img);
-					$('.tool_03').append(list);
-				} else { alert("保存領域がいっぱいです。どれか消して再度登録して下さい");}
-			} else {
-				if ( paintDb.length < maxCases ) {
-					var i = paintDb.length;
-					paintDb[i] = base64;	
-				}
-			}
-		}
-	};
-	var layerInfo = function () {
-		var layer_index = nowLayer.replace('canvas','');
-		var view = $("ol li").eq(layer_index).find('img');
-		view.attr("src",layer[nowLayer].toDataURL());
-	}
-	$.each(localStorage,function(i) {
-		var datasrc  = localStorage.getItem("save"+i);
-		var save_img = $('<img />').attr('src', datasrc).width('50px').height('34px');
-		var list     = $('<li />').append(save_img);
-		$('.tool_03').append(list);
-	});
 	$('#canvas canvas').click(function() {
 		Draw.prototype.dbSave();
 		var r = paintDb.length;
@@ -157,7 +176,6 @@ $(function() {
             Draw.prototype.insta();
         }
 	});
-	var e = new Draw( layer.canvas3 );
 	$('ol li').click(function() {
 		 switch ($(this).index()) {
 			case 0 : Draw(layer.canvas0);

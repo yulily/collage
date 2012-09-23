@@ -25,9 +25,8 @@
     $json = file_get_contents("https://api.instagram.com/v1/users/self/media/recent?access_token=".$token);
     $data = json_decode($json,true);
 
-
-    foreach($data as $photo){
-        for($i=0; $i<count($photo);$i++ ){
+    foreach( $data as $photo ){
+        for( $i = 0; $i < count($photo); $i++ ){
             if(isset($photo[$i])){
                 $url = $photo[$i]["images"]["standard_resolution"]["url"];
                 $data = file_get_contents($url);
@@ -62,8 +61,8 @@
             <div id="instagram">
                 <ul>
                 <?php
-                    for($i=0; $i<count($photo);$i++ ){
-                        if(isset($photo[$i])){
+                    for( $i = 0; $i < count($photo); $i++ ){
+                        if( isset($photo[$i]) ){
                             echo "<li><img src='img/insta".$i.".jpg' width='100' /></li> ";
                         }
                     }
@@ -72,33 +71,6 @@
                 <p id="draw" class="thanks"><a href="create.php">描きにいく</a></p>
             </div>
         </div>
-        <?php
-/*
-    function wbsRequest2($method, $url, $params = array()){
-        $data = http_build_query($params);
-        if($method == 'GET') {
-            $url = ($data != '')?$url.'?'.$data:$url;
-        }
-        $ch = curl_init($url);
-        if($method == 'POST'){
-            curl_setopt($ch,CURLOPT_POST,1);
-            curl_setopt($ch,CURLOPT_POSTFIELDS,$data);
-        }
-        //curl_setopt($ch, CURLOPT_HEADER,true); //header情報も一緒に欲しい場合
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 2);
-        $res = curl_exec($ch);
-        //ステータスをチェック
-        $respons = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        if(preg_match("/^(404|403|500)$/",$respons)){
-            return false;
-        }
-        return $res;
-    }
-    //$data = array('access_token' => $token);
-    //$json = json_decode(wbsRequest2("GET","https://api.instagram.com/v1/users/self/media/recent",$data),true);
-*/
-        ?>
 	</body>
 </html>
 
