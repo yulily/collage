@@ -8,7 +8,8 @@ body{
 	-webkit-text-size-adjust: none;
 	font-family:"Century Gothic","Lucida Sans Unicode","Lucida Grande",Arial,Helvetica,"ヒラギノ丸ゴ Pro W4",HiraMaruPro-W4,"ヒラギノ角ゴ Pro W3","メイリオ",Meiryo,Osaka,sans-serif
 }
-body,html{ position: relative; height: 100%}
+body,html{ position: relative; height: 100%; min-height: 100%}
+#wrap{ height: 100%; min-height: 100%}
 /* set */
 a{ color: #2b0f07}
 ul,ol{ list-style: none}
@@ -35,6 +36,7 @@ h1,h2,h3,h4,h5{ font-size: 1em}
 	margin: 0 0 10px;
 	clear: both;
 	color: #fff;
+	cursor: move;
 	border-radius: 10px 10px 0 0;
 	background-color: #222
 }
@@ -49,50 +51,108 @@ body.thankyou{ text-align: center}
     vertical-align: middle;
     top: 5px;
     left: 0px;
+    z-index: 10;
     padding-right: 5px;
     text-align: right;
     background-color: #af856c;
     position: fixed
 }
+input[type="range"],
+#tool ul li ul li img{
+	cursor: pointer
+}
+/* no support */
+.att{
+	width: 500px;
+	padding: 25px;	
+	position: absolute;
+	top:  260px;
+	left: 50%;
+	display: none;
+	margin-left: -265px;
+	border: 3px solid #c65e5e;
+	background-color: #eee;
+	z-index: 4
+}
+.att.js{ display: block}
 /* save_hidden */
-#s_over,
-#over{
+#over,
+#s_over{
 	width: 100%;
 	height: 100%;
 	display: none;
 	top: 0;
 	left: 0;
-	position: fixed;
-	z-index: 3
+	position: fixed
 }
-	#over{ background-color: rgba(0,0,0,.6); z-index: 1}
+#over{ z-index: 8}
 	#btn{
 		width: 320px;
-		margin: 0 auto
+		top: 50%;
+		left: 50%;
+		margin: -100px 0 0 -160px;
+		position: absolute;
+		z-index: 8;
 	}
 		#regist,
 		#back{
+			width: 150px;
+			height: 30px;
+			color: #fff;
+			font-size: 0.9em;
+			text-shadow: 1px 0 0 #eee;
 			display: block;
-			margin-left: 20px;
+			border: none;
+			cursor: pointer;
+			margin-left: 10px;
 			float: left
+		}
+		#regist{
+			background: url(../image/save_btn_back.png) no-repeat;
+		}
+		#back{
+			background: url(../image/back_btn_back.png) no-repeat;
+		}
+#s_over{
+	background-color: rgba(0,0,0,.4);
+	z-index: 6
+}
+.hide{
+	opacity: 0;
+}
+	#camera{
+		width: 733px;
+		height: 550px;
+		padding: 10px;
+		position: absolute;
+		bottom: 0;
+		left: 50%;
+		z-index: 6;
+		margin-left: -366px;
+		background: rgba(0,0,0,.8)
+	}
+		#camera object{
+			position: absolute
 		}
 /* content */
 	article{
 		width: 820px;
 		position: absolute;
-		top : 20px;
+		top : 15px;
 		left: 50%;
 		margin-left: -400px;
 		background-color: rgba(0,0,0,.5);
 		border-radius: 10px 10px 0 0
 	}
 		article h1.title{
-			margin: 0
+			margin: 0;
+			cursor: default
 		}
 		#canvas{
 			width: 800px;
 			height: 550px;
 			margin: 10px;
+			cursor: crosshair;
 			position: relative;
 			z-index: 2
 		}
@@ -114,23 +174,45 @@ body.thankyou{ text-align: center}
 		}
 		#tool > ul,
 		#tool > dl{
-			z-index: 10;
+			z-index: 3;
+            padding: 0;
+            border: 1px solid #222;
 			border-radius: 10px 10px 0 0;
 			background-color: rgba(0,0,0,.5);
 			position: absolute
 		}
+		#tool ul li ul,
+		#tool ul li ol,	
+		#tool dl dd{
+			padding: 0 5px
+		}
 			.tool_01{ width:200px; top: 40px; left: 10px}
-			.tool_02{ width:300px; overflow: hidden; top: 200px; left: 10px}
-			.tool_03{ width:300px; top: 580px; left: 10px}
-			.tool_04{ width:300px; top: 10px; right: 10px}			
+			.tool_02{ width:240px; overflow: hidden; top: 180px; left: 10px}
+			.tool_03{ width:240px; overflow: hidden; top: 570px; left: 10px}
+			.tool_04{ width:270px; top: 10px; right: 10px}
 			.tool_05{ width:200px; top: 400px; right: 10px}
-			.tool_06{ width:150px; top: 600px; right: 250px}
+			.tool_06{ width:150px; top: 585px; right: 250px}
 				.tool_01 .nf{ clear: both}
-				.tool_01 li:not(.nf){ float: left}
-                .tool_02 li ul { width: 2000px; height: 130px; overflow: hidden;}
-                .tool_02 li li.title{ width: 300px;}
-                .tool_02 li li:not(.title),
-				.tool_03 li:not(.title){ line-height: 0; border: 1px solid #333; margin: 5px; float: left}
+				.tool_01 li:not(.nf){ float: left; cursor: pointer}
+                .tool_02 > li{ height: 125px; position: relative}
+                .tool_02 li ul {
+                    top: 40px;
+                    left: 0;
+                    position: absolute;
+                    overflow: hidden
+                }
+                .tool_02 li:first-child ul{ height: 110px}
+                .tool_02 li li.title{ width: 300px}
+                .tool_02 div.yet_insta{
+                	padding: 0 6px 8px
+                }
+                .tool_02 li ul li,
+				.tool_03 li ul li{
+					line-height: 0;
+					border: 1px solid #333;
+					margin: 5px;
+					float: left
+				}
 				.tool_05 ol li{
 					line-height: 50px;
 					vertical-align: top
@@ -140,7 +222,7 @@ body.thankyou{ text-align: center}
 			.nothum{ width: 200px}
 		#weight{
 			width: 100px;
-			height: 20px;
+			height: 10px;
 			background-color: #eee;
 			box-shadow: 0 0 5px #222;
 			border-top: 1px solid #666;
@@ -148,10 +230,10 @@ body.thankyou{ text-align: center}
 			position: relative
 		}
 			.get{
-				width: 10px;
-				height: 25px;
+				width: 14px;
+				height: 14px;
 				border: 1px solid #eee;
-				border-radius: 5px;
+				border-radius: 7px;
 				box-shadow: 0 0 2px #222;
 				background-color: #444;
 				background-image: linear-gradient(bottom, rgb(77,77,77) 8%, rgb(51,49,51) 33%, rgb(74,74,74) 98%);
@@ -168,7 +250,7 @@ body.thankyou{ text-align: center}
 					color-stop(0.98, rgb(74,74,74))
 				);
 				position: absolute;
-				top: -5px;
+				top: -3px;
 				left: 0 
 			}
 		#tool dl dd{ margin: 10px 0}
@@ -178,8 +260,10 @@ body.thankyou{ text-align: center}
 				height: 23px;
 				margin-left: 2px;
 				text-indent: -9999px;
+				cursor: pointer;
 				background-color: #444;
-				-webkit-box-ordinal-group: 1  
+				-webkit-box-ordinal-group: 1;
+				box-ordinal-group: 1
 			}
 			.clickzone{
 				width: 100%;
@@ -188,8 +272,11 @@ body.thankyou{ text-align: center}
 			}
 			#tool .cust li{
 				width: 23px;
-				-webkit-box-ordinal-group: 1
+				display: block;
+				-webkit-box-ordinal-group: 1;
+				box-ordinal-group: 1
 			}
+				#tool .cust li input{ width: 23px}
 			#tool ol .layer {
 				width: 50px;
 				height: 34px;
@@ -199,6 +286,7 @@ body.thankyou{ text-align: center}
 			#tool #save{
 				width: 138px;
 				color: #fff;
+				margin: 0 auto 10px;
 				text-align: center;
 				text-shadow: 1px 0 0 #000;
 				border: 1px solid #444;
@@ -219,8 +307,8 @@ body.thankyou{ text-align: center}
 				);
 			}
 #picture{
-	width: 630px;
-	padding-top: 25px;
+	width: 800px;
+	padding-top: 50px;
 	margin: 0 auto
 }
 	.thanks{
@@ -233,10 +321,12 @@ body.thankyou{ text-align: center}
 		left: 70%;
 		margin-left: -75px;
 		padding: 20px;
+        background-color: #fff;
 		font-weight: bold;
 		border: 10px solid #444;
 		border-bottom: none;
 		border-radius: 50%;
+		z-index: 1
 	}
 	#draw.thanks{
 		top: auto;
@@ -245,21 +335,31 @@ body.thankyou{ text-align: center}
 		position: relative
 	}
 #your_canvas{
-	width: 630px;
-	height: 750px;
+	width: 650px;
+	height: 100%;
+    min-height: 100%;
+    position: relative;
+    background: url('../image/dapad.jpg') center bottom no-repeat;
 	text-shadow: -1px 1px 2px #333, -1px -1px 2px #333, 1px -1px 2px #333, 1px 1px 2px #333;
 	margin: 0 auto 
 }
-	#your_canvas ul{
-		color: #fff;
-		padding-top: 45px;
-		margin: 0 50px;
-	}
+    #your_canvas > section{
+        width: 417px;
+        position: absolute;
+        bottom: 70px;
+        left: 50%;
+        margin-left: -203px;
+    }
+        #your_canvas ul{
+            color: #fff;
+            margin-bottom: 30px
+        }
 		#your_canvas a{ color: #fff}
 .thankyou nav{
 	width: 300px;
-	top: 10px;
-	right: 0;
+	top: 180px;
+	right: 30px;
+    z-index: 1;
 	position: fixed;
 }
 	.thankyou nav #nowselect li{

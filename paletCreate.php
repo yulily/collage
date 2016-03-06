@@ -9,10 +9,11 @@ if ( $_FILES["img"]["size"] != 0 ) :
 		if (move_uploaded_file($fileTmpName,'./img/'.$fileName)) :
 			$color 	 = array();
 			$palet 	 = array();
-	
+			echo $fileName;
 			$im = new Imagick('./img/'.$fileName);
-			$im->quantizeImage(10, Imagick::COLORSPACE_RGB, 0, true , false);
-			$im->resizeImage(500,500, imagick::FILTER_LANCZOS, 0.9, true);
+			$im->setImageFormat("gif");
+			$im->resizeImage(400,400, imagick::FILTER_LANCZOS, 0.9, true);
+			$im->quantizeImage(8, Imagick::COLORSPACE_RGB, 0, true , false);
 			$im->writeImage('./img/'.$fileName);
 			$im->destroy();
 	
@@ -24,8 +25,8 @@ if ( $_FILES["img"]["size"] != 0 ) :
 	
 			list($width,$height) = getimagesize('./img/'.$fileName);
 	
-			for($i = 0; $i < $width-10; $i+=10){
-				for($v = 0; $v < $height-10; $v+=10){
+			for($i = 0; $i < $width; $i++){
+				for($v = 0; $v < $height; $v++){
 					$rgb 	 = imagecolorat($im, $i, $v);	
 					$info    = imagecolorsforindex($im,$rgb);
 					$r 		 = sprintf("%02x",$info['red']);
@@ -65,6 +66,9 @@ if ( $_FILES["img"]["size"] != 0 ) :
 	endif;
 	
 	if($result == true){
+		$rank = array_count_values($color);
+		arsort($rank);
+		$palet = array_keys($rank);
 	?>
 	  <li>#<?php echo $palet[0] ?></li>
 	  <li>#<?php echo $palet[1] ?></li>

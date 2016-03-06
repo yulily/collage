@@ -5,13 +5,8 @@
 </head>
 <body>
 <?php
-/* 画像を32色に減色する */
-$im = new Imagick("img/1342337767-1.png");
-$im->quantizeImage(30, Imagick::COLORSPACE_RGB, 0, true , false);
-$im->writeImage('1342337767-1.png');
-$im->destroy();
+	phpinfo();
 ?>
-<img src="1342337767-1.png" /><br />
 
 </body>
 </html>

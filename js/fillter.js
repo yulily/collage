@@ -23,7 +23,7 @@ pe.setFilter = function(){
 $(function(){
 	$('nav,#nowselect li').css('display','none');
 	$('a.fillter').click(function(){
-		$('p.thanks').fadeOut();
+		//$('p.thanks').fadeOut();
 		$('nav,#nowselect li:first').fadeIn();
 	});
 	$('#nowselect input[type="range"]').change(function(){
@@ -38,10 +38,10 @@ $(function(){
 		$('#nowselect').find('li').hide();
 		$('#nowselect li#'+ now ).fadeIn();
 	});
-	$("#edit").click(function(){
+	/*$("#edit").click(function(){
 		$(this).upload('fillter.php',
 		$("#form").serialize(),function(html){
 			$("#picture").html(html);
 		},'html');
-	});
+	});*/
 });

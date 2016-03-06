@@ -31,7 +31,7 @@
 <script src="js/fillter.js"></script>	
 <head>
 	<meta charset="utf-8"><!-- 文字コード設定 -->
-	<title>シリージュ</title>
+	<title>DaPaD</title>
 	
 	<!-- スマホ用の指定 start -->
 	<meta name="viewport" content="width=device-width" /><!-- ビューポート設定：デバイスの幅に依存 -->
@@ -51,11 +51,11 @@
 	<body class="thankyou">
         <div id="wrap" class="saving cf">
             <p class="thanks">Thank you!<br />保存してね！<br />
-            	<a href="index.html">TOPへ戻る</a><br /><br />
+            	<a href="index.php">TOPへ戻る</a><br /><br />
                 <a href="#" class="fillter">加工する？</a>
             </p>
             <nav>
-              <form action="fillter.php" id="form" method="post">
+              <form action="index.php" id="fillter" method="post">
             	<ul id="nowselect">
                     <li id="saturate"><input type="range" name="saturate" min="0" max="300" value="100"><output class="value"><span>100</span>%</output></li>
                     <li id="brightness"><input type="range" name="brightness" min="-100" max="100" value="0"><output class="value"><span>0</span>%</output></li>
@@ -80,7 +80,7 @@
                 	  <li class="opacity">opacity</li>
                 	</ul>
                 </div>
-				<input type="submit" name="submit" class="paint" id="edit" value="加工する" />
+				<input type="submit" name="submit" class="paint" id="edit" value="まだ作成中です。。" />
                </form>
             </nav>
             <div id="picture"><img src="image/create/<?php echo $url ?>.png" /></div>

@@ -16,6 +16,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
+ #palet form > input{
+  width: 130px;
+  margin: 0 auto;
+  display: block
+ }
 .farbtastic {
   position: relative;
 }
@@ -26,6 +31,7 @@
 .farbtastic, .farbtastic .wheel {
   width: 195px;
   height: 195px;
+  margin: 0 auto 
 }
 .farbtastic .color, .farbtastic .overlay {
   top: 47px;
